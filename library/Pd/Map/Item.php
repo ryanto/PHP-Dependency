@@ -38,7 +38,7 @@ class Pd_Map_Item {
     }
 
     public function dependencyName() {
-        return $this->_name;
+        return $this->_dependencyName;
     }
 
     public function injectWith() {

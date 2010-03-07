@@ -1,21 +1,25 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
-require_once 'Pd/tests/MapTests/ItemTest.php';
+// add lib to global include line
+set_include_path(get_include_path() . PATH_SEPARATOR .
+        dirname(__FILE__) . '/../library/'
+);
 
-class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
+require_once 'PHPUnit/Framework.php';
+require_once 'MapTests/ItemTest.php';
+
+class AllTests extends PHPUnit_Framework_TestSuite {
 
     protected function setUp() {
-       
-
+    
     }
 
     public static function suite() {
 
-        $suite = new PdTests_AllTests();
+        $suite = new AllTests();
 
         $suite->addTestSuite('PdTests_MapTests_ItemTest');
-        
+
 
         return $suite;
     }
