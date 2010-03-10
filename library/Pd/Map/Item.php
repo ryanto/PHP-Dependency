@@ -16,6 +16,7 @@ class Pd_Map_Item {
     private $_injectWith;
     private $_injectAs;
     private $_force = false;
+    private $_newClass = null;
 
     public function setDependencyName($dependencyName) {
         $this->_dependencyName = $dependencyName;
@@ -37,6 +38,11 @@ class Pd_Map_Item {
         return $this;
     }
 
+    public function setNewClass($newClass) {
+        $this->_newClass = $newClass;
+        return $this;
+    }
+
     public function dependencyName() {
         return $this->_dependencyName;
     }
@@ -51,6 +57,10 @@ class Pd_Map_Item {
     
     public function force() {
         return $this->_force;
+    }
+
+    public function newClass() {
+        return $this->_newClass;
     }
 
 

@@ -16,6 +16,7 @@ class PdTests_MapTests_ItemTest extends PHPUnit_Framework_TestCase {
         $this->item->setInjectAs('mySomething');
         $this->item->setInjectWith('method');
         $this->item->setForce(true);
+        $this->item->setNewClass('New_Class');
     }
 
     public function testName() {
@@ -32,6 +33,10 @@ class PdTests_MapTests_ItemTest extends PHPUnit_Framework_TestCase {
 
     public function testForce() {
         $this->assertTrue($this->item->force());
+    }
+
+    public function testNewClass() {
+        $this->assertEquals('New_Class', $this->item->newClass());
     }
 
     public function tearDown() {
