@@ -34,4 +34,8 @@ class PdTests_MapTests_ItemTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($this->item->force());
     }
 
+    public function tearDown() {
+        unset($this->item);
+    }
+
 }
