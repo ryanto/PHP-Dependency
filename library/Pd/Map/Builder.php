@@ -6,11 +6,17 @@
  * @author ryan
  */
 
+require_once 'Pd/Map.php';
 require_once 'Pd/Map/Item.php';
+require_once 'Pd/Map/Builder/Parser';
 
 class Pd_Map_Builder {
 
     private $_class;
+
+    /**
+     * @var Pd_Map
+     */
     private $_map;
 
     /**
@@ -28,6 +34,7 @@ class Pd_Map_Builder {
 
     public function build() {
 
+        $this->_map = new Pd_Map();
         $this->_reflect = new ReflectionClass($this->_class);
 
         $this->_buildMethods();
@@ -42,59 +49,39 @@ class Pd_Map_Builder {
 
         foreach($methods as $method) {
 
-            if ($this->_checkForCmd($method->getDocComment())) {
+            $parser = new Pd_Map_Builder_Parser();
+            $parser->setString($method->getDocComment());
+            $parser->setInfo($method);
+            $parser->match();
+            $parser->buildOptions();
 
-                $options = $this->_parseCmd($method->getDocComment());
+            $allOptions = $parser->getOptions();
 
+            foreach ($allOptions as $options) {
 
-                if ($method->getName() == '__construct') {
-                    $options['injectWith'] = 'constructor';
-                } else {
-                    $options['injectWith'] = 'method';
-                }
-
-                $options['injectAs'] = $method->getName();
+                $this->_map->add(
+                        $this->_itemFromMethod($options, $method)
+                );
+                
             }
 
         }
     }
 
-    private function _checkForCmd($docBlock = '') {
-        return (strpos($docBlock, '@PdInject ') !== false);
-    }
+    private function _itemFromMethod($options, $method) {
 
-    /**
-     */
-    private function _parseCmd($cmd) {
-
-        
-        /*
-        if (!$matched) {
-            throw new Exception('No commands matched.  Make sure your syntax is correct');
-        }
-         * 
-         */
-
-        var_dump($matches);
-        exit;
-
-        $params = explode(" ", $matches[1]);
-        var_dump($params);
-
-        // grab dependency name
-        if (count($params) < 1) {
-            throw new Exception('You must supply a dependency name when using @PdInject');
+        if ($method->getName() == '__construct') {
+            $options['injectWith'] = 'constructor';
+        } else {
+            $options['injectWith'] = 'method';
         }
 
-        // parse out all options
+        $options['injectAs'] = $method->getName();
 
-        
-
-
-        return array();
     }
 
-    
+
+
     private function _makeItemFromOptions($options) {
         $item = new Pd_Map_Item();
         $item->setDependencyName($options['dependencyName']);
