@@ -8,7 +8,7 @@
 
 require_once 'Pd/Map.php';
 require_once 'Pd/Map/Item.php';
-require_once 'Pd/Map/Builder/Parser';
+require_once 'Pd/Map/Builder/Parser.php';
 
 class Pd_Map_Builder {
 
@@ -28,14 +28,24 @@ class Pd_Map_Builder {
         $this->_class = $class;
     }
 
+    /**
+     * The map
+     *
+     * @return Pd_Map
+     */
     public function map() {
         return $this->_map;
     }
 
-    public function build() {
-
+    public function setup() {
         $this->_map = new Pd_Map();
         $this->_reflect = new ReflectionClass($this->_class);
+    }
+
+
+    public function build() {
+
+        $this->setup();
 
         $this->_buildMethods();
 
@@ -43,7 +53,7 @@ class Pd_Map_Builder {
 
     }
 
-    private function _buildMethods() {
+    public function buildMethods() {
 
         $methods = $this->_reflect->getMethods();
 

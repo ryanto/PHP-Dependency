@@ -9,23 +9,17 @@ class PdTests_stubs_Dummy {
     private $forcedVar;
 
     /**
-     * @PdInject Apple1 force:true
-     * @PdInject Apple2 force:true 
+     * @PdInject Apple1
      */
     public function  __construct($constructorArg = null) {
         $this->constructorArg = $constructorArg;
     }
 
-    public function setApple($apple) {
-        $this->_apple = $apple;
-    }
-
     /**
      * @PdInject Apple
-     * @PdInject Banana
      */
-    public function setAppleAndBanana($apple, $banana) {
-
+    public function setApple($apple) {
+        $this->_apple = $apple;
     }
 
     public function apple() {

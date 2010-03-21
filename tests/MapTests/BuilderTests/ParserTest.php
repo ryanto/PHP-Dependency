@@ -61,7 +61,7 @@ class PdTests_MapTests_BuilderTests_ParserTest extends PHPUnit_Framework_TestCas
 
         $options = $this->parser->getOptions();
 
-        $this->assertEquals(0, count($options[0]));
+        $this->assertNull($options[0]['dependencyName']);
 
     }
 

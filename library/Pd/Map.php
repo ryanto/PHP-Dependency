@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * A map is just a bunch of items
+ *
+ */
+
 class Pd_Map {
 
     /**
@@ -24,18 +29,19 @@ class Pd_Map {
     }
 
     /**
-     * Returns the map
+     * Returns an array of items
      *
+     * @param string injectWith return an array of only items that match injectWith
      * @return array
      */
-    public function map($type = null) {
+    public function map($injectWith = null) {
         if (is_null($type)) {
-            return $this->_item;
+            return $this->_items;
         } else {
 
             $return = array();
-            foreach ($this->_map as $item) {
-                if ($item->type() == $type) {
+            foreach ($this->_items as $item) {
+                if ($item->injectWith() == $injectWith) {
                     $return[] = $item;
                 }
             }
@@ -46,7 +52,7 @@ class Pd_Map {
 
 
     public function has($type) {
-        if (count($this->map($type)) > 0) {
+        if (count($this->map($injectWith)) > 0) {
             return true;
         } else {
             return false;
@@ -54,7 +60,7 @@ class Pd_Map {
     }
 
     public function count() {
-        return count($this->_map);
+        return count($this->_items);
     }
 
 }

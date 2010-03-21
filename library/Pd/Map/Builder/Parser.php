@@ -38,6 +38,16 @@ class Pd_Map_Builder_Parser {
         return count($this->_matches[1]);
     }
 
+    private function _defaultOptions() {
+        return array(
+            'dependencyName' => null,
+            'force' => false,
+            'injectWith' => null,
+            'injectAs' => null,
+            'newClass' => false,
+        );
+    }
+
     /**
      * This function builds an array of options
      * for each of the commands that were matched.
@@ -57,7 +67,7 @@ class Pd_Map_Builder_Parser {
         foreach ($this->_matches[1] as $command) {
 
             $command = trim($command);
-            $options = array();
+            $options = $this->_defaultOptions();
             
             if ($command != "") {
 
