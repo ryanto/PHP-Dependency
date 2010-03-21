@@ -68,26 +68,42 @@ class Pd_Map_Builder {
         }
     }
 
+    /**
+     * Returns an item (tail call to makeItemFromOptions) based
+     * off a combination of the passed options and method
+     *
+     *
+     * @param array $options
+     * @param ReflectionMethod $method
+     * @return Pd_Map_Item
+     */
     private function _itemFromMethod($options, $method) {
 
         if ($method->getName() == '__construct') {
             $options['injectWith'] = 'constructor';
         } else {
             $options['injectWith'] = 'method';
+            $options['injectAs'] = $method->getName();
         }
 
-        $options['injectAs'] = $method->getName();
+        return $this->_makeItemFromOptions($options);
 
     }
 
 
-
+    /**
+     * Creates a Map Item based off options array
+     *
+     * @param array $options
+     * @return Pd_Map_Item
+     */
     private function _makeItemFromOptions($options) {
         $item = new Pd_Map_Item();
         $item->setDependencyName($options['dependencyName']);
         $item->setInjectWith($options['injectWith']);
         $item->setInjectAs($options['injectAs']);
         $item->setForce($options['force']);
+        $item->setNewClass($options['newClass']);
 
         return $item;
     }
