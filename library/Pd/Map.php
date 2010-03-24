@@ -29,30 +29,26 @@ class Pd_Map {
     }
 
     /**
-     * Returns an array of items
+     * Returns an array of items based on the injectWith
      *
      * @param string injectWith return an array of only items that match injectWith
      * @return array
      */
-    public function map($injectWith = null) {
-        if (is_null($type)) {
-            return $this->_items;
-        } else {
+    public function itemsFor($injectWith) {
 
-            $return = array();
-            foreach ($this->_items as $item) {
-                if ($item->injectWith() == $injectWith) {
-                    $return[] = $item;
-                }
+        $return = array();
+        foreach ($this->_items as $item) {
+            if ($item->injectWith() == $injectWith) {
+                $return[] = $item;
             }
-            return $return;
-
         }
+        return $return;
+
     }
 
 
-    public function has($type) {
-        if (count($this->map($injectWith)) > 0) {
+    public function has($injectWith) {
+        if (count($this->itemsFor($injectWith)) > 0) {
             return true;
         } else {
             return false;

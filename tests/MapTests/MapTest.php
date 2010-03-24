@@ -2,7 +2,8 @@
 
 require_once 'PHPUnit/Framework.php';
 
-require_once 'Pd/Map/Map.php';
+require_once 'Pd/Map.php';
+require_once 'Pd/Map/Item.php';
 
 class PdTests_MapTests_MapTest extends PHPUnit_Framework_TestCase {
 
@@ -15,7 +16,7 @@ class PdTests_MapTests_MapTest extends PHPUnit_Framework_TestCase {
         $this->map = new Pd_Map();
 
         $item = new Pd_Map_Item();
-        $item->setName('depend');
+        $item->setDependencyName('depend');
         $item->setInjectAs('myDepend');
         $item->setInjectWith('setter');
 
@@ -33,26 +34,25 @@ class PdTests_MapTests_MapTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testMapNoInjectWithParam() {
-        $this->assertEquals(1, count($this->map->map()));
+    public function testMapItems() {
+        $this->assertEquals(1, count($this->map->items()));
     }
 
-    public function testMapWithParam() {
-        $item = new Base_Di_Map_Item();
-        $item->setName('abc');
-        $item->setType('testType');
+    public function testItemsFor() {
+        $item = new Pd_Map_Item();
+        $item->setDependencyName('abc');
+        $item->setInjectAs('abc');
+        $item->setInjectWith('test');
 
         $this->map->add($item);
 
-        $testTypes = $this->map->map('testType');
+        $items = $this->map->itemsFor('test');
 
         $this->assertEquals(
-                $testTypes[0]->name(),
+                $items[0]->dependencyName(),
                 'abc'
         );
     }
-
-
 
     public function testCount() {
         $this->assertEquals(
@@ -69,5 +69,8 @@ class PdTests_MapTests_MapTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($this->map->has('testType'));
     }
 
+    protected function tearDown() {
+        unset($this->map);
+    }
 
 }
