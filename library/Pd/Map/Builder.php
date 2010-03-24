@@ -72,7 +72,7 @@ class Pd_Map_Builder {
                 $this->_map->add(
                         $this->_itemFromMethod($options, $method)
                 );
-                
+
             }
 
         }
@@ -106,6 +106,29 @@ class Pd_Map_Builder {
         }
 
     }
+
+    public function buildClass() {
+
+        $class = $this->_reflect;
+
+        $parser = new Pd_Map_Builder_Parser();
+        $parser->setString($class->getDocComment());
+        $parser->setInfo($class);
+        $parser->match();
+        $parser->buildOptions();
+
+        $allOptions = $parser->getOptions();
+
+        foreach ($allOptions as $options) {
+            
+            $this->_map->add(
+                    $this->_makeItemFromOptions($options)
+            );
+
+        }
+
+    }
+
 
     /**
      * Returns an item (tail call to makeItemFromOptions) based

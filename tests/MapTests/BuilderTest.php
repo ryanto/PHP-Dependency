@@ -69,6 +69,23 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
 
     }
 
+    public function testBuildClass() {
+
+        $this->builder->setup();
+        $this->builder->buildClass();
+
+        $items = $this->builder->map()->itemsFor('method');
+
+        var_dump($items);
+
+        $this->assertEquals(
+                'Pear',
+                $items[0]->dependencyName()
+        );
+
+    }
+
+
     protected function tearDown() {
         unset($this->builder);
     }
