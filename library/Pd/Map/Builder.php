@@ -85,7 +85,7 @@ class Pd_Map_Builder {
         foreach ($properties as $property) {
 
             $parser = new Pd_Map_Builder_Parser();
-            $parser->setString($method->getDocComment());
+            $parser->setString($property->getDocComment());
             $parser->setInfo($property);
             $parser->match();
             $parser->buildOptions();
@@ -93,6 +93,9 @@ class Pd_Map_Builder {
             $allOptions = $parser->getOptions();
 
             foreach ($allOptions as $options) {
+
+                $options['injectWith'] = 'property';
+                $options['injectAs'] = $property->getName();
 
                 $this->_map->add(
                         $this->_makeItemFromOptions($options)

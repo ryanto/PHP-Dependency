@@ -57,6 +57,16 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testBuildProperties() {
 
+        $this->builder->setup();
+        $this->builder->buildProperties();
+
+        $items = $this->builder->map()->itemsFor('property');
+
+        $this->assertEquals(
+                'Pear',
+                $items[0]->dependencyName()
+        );
+
     }
 
     protected function tearDown() {
