@@ -47,7 +47,7 @@ class Pd_Map_Builder {
 
         $this->setup();
 
-        $this->_buildMethods();
+        $this->buildMethods();
 
 
 
@@ -76,6 +76,32 @@ class Pd_Map_Builder {
             }
 
         }
+    }
+
+    public function buildProperties() {
+
+        $properties = $this->_reflect->getProperties();
+
+        foreach ($properties as $property) {
+
+            $parser = new Pd_Map_Builder_Parser();
+            $parser->setString($method->getDocComment());
+            $parser->setInfo($property);
+            $parser->match();
+            $parser->buildOptions();
+
+            $allOptions = $parser->getOptions();
+
+            foreach ($allOptions as $options) {
+
+                $this->_map->add(
+                        $this->_makeItemFromOptions($options)
+                );
+
+            }
+
+        }
+
     }
 
     /**

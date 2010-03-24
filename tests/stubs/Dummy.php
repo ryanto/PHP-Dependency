@@ -3,13 +3,18 @@
 class PdTests_stubs_Dummy {
 
     protected $_apple = null;
+
+    /**
+     * @PdInject Pear
+     */
     public $pear;
+    
     private $constructorArg;
 
     private $forcedVar;
 
     /**
-     * @PdInject Apple1
+     * @PdInject Banana
      */
     public function  __construct($constructorArg = null) {
         $this->constructorArg = $constructorArg;

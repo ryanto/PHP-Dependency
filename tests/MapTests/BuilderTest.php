@@ -32,10 +32,30 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
         $this->builder->setup();
         $this->builder->buildMethods();
 
+        $items = $this->builder->map()->itemsFor('constructor');
+
+        $this->assertEquals(
+                'Banana',
+                $items[0]->dependencyName()
+        );
 
     }
 
     public function testBuildMethodRegular() {
+
+        $this->builder->setup();
+        $this->builder->buildMethods();
+
+        $items = $this->builder->map()->itemsFor('method');
+
+        $this->assertEquals(
+                'Apple',
+                $items[0]->dependencyName()
+        );
+
+    }
+
+    public function testBuildProperties() {
 
     }
 
