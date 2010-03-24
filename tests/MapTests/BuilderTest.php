@@ -69,18 +69,29 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testBuildClass() {
+    public function testBuildClassCount() {
+
+        $this->builder->setup();
+        $this->builder->buildClass();
+
+        $this->assertEquals(
+                2,
+                $this->builder->map()->count()
+        );
+
+    }
+
+
+    public function testBuildClassItem2() {
 
         $this->builder->setup();
         $this->builder->buildClass();
 
         $items = $this->builder->map()->itemsFor('method');
 
-        var_dump($items);
-
         $this->assertEquals(
-                'Pear',
-                $items[0]->dependencyName()
+                'PdTests_stubs_Force',
+                $items[1]->newClass()
         );
 
     }

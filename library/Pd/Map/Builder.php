@@ -53,24 +53,41 @@ class Pd_Map_Builder {
 
     }
 
+    /**
+     * Pass in a reflection item (class, property, method)
+     * and this function will build a parser and return its 
+     * results.
+     * 
+     * @param ReflectionClass $classProperty
+     * @return array all options
+     */
+    private function _optionsFrom($classProperty) {
+        $parser = new Pd_Map_Builder_Parser();
+        $parser->setString($classProperty->getDocComment());
+        $parser->setInfo($classProperty);
+        $parser->match();
+        $parser->buildOptions();
+
+        return $parser->getOptions();
+    }
+
     public function buildMethods() {
 
         $methods = $this->_reflect->getMethods();
 
         foreach($methods as $method) {
 
-            $parser = new Pd_Map_Builder_Parser();
-            $parser->setString($method->getDocComment());
-            $parser->setInfo($method);
-            $parser->match();
-            $parser->buildOptions();
+            foreach ($this->_optionsFrom($method) as $options) {
 
-            $allOptions = $parser->getOptions();
-
-            foreach ($allOptions as $options) {
+                if ($method->getName() == '__construct') {
+                    $options['injectWith'] = 'constructor';
+                } else {
+                    $options['injectWith'] = 'method';
+                    $options['injectAs'] = $method->getName();
+                }
 
                 $this->_map->add(
-                        $this->_itemFromMethod($options, $method)
+                        $this->_makeItemFromOptions($options)
                 );
 
             }
@@ -84,15 +101,7 @@ class Pd_Map_Builder {
 
         foreach ($properties as $property) {
 
-            $parser = new Pd_Map_Builder_Parser();
-            $parser->setString($property->getDocComment());
-            $parser->setInfo($property);
-            $parser->match();
-            $parser->buildOptions();
-
-            $allOptions = $parser->getOptions();
-
-            foreach ($allOptions as $options) {
+            foreach ($this->_optionsFrom($property) as $options) {
 
                 $options['injectWith'] = 'property';
                 $options['injectAs'] = $property->getName();
@@ -109,18 +118,8 @@ class Pd_Map_Builder {
 
     public function buildClass() {
 
-        $class = $this->_reflect;
+        foreach ($this->_optionsFrom($this->_reflect) as $options) {
 
-        $parser = new Pd_Map_Builder_Parser();
-        $parser->setString($class->getDocComment());
-        $parser->setInfo($class);
-        $parser->match();
-        $parser->buildOptions();
-
-        $allOptions = $parser->getOptions();
-
-        foreach ($allOptions as $options) {
-            
             $this->_map->add(
                     $this->_makeItemFromOptions($options)
             );
@@ -130,27 +129,6 @@ class Pd_Map_Builder {
     }
 
 
-    /**
-     * Returns an item (tail call to makeItemFromOptions) based
-     * off a combination of the passed options and method
-     *
-     *
-     * @param array $options
-     * @param ReflectionMethod $method
-     * @return Pd_Map_Item
-     */
-    private function _itemFromMethod($options, $method) {
-
-        if ($method->getName() == '__construct') {
-            $options['injectWith'] = 'constructor';
-        } else {
-            $options['injectWith'] = 'method';
-            $options['injectAs'] = $method->getName();
-        }
-
-        return $this->_makeItemFromOptions($options);
-
-    }
 
 
     /**

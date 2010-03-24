@@ -2,7 +2,7 @@
 
 /**
  * @PdInject Force method:setForce force:true
- * @PdInject new:Force2 method:setForce2 force:true
+ * @PdInject new:PdTests_stubs_Force method:setForce2 force:true
  *
  */
 class PdTests_stubs_Dummy {
