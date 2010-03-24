@@ -24,6 +24,11 @@ class Pd_Map_Builder {
      */
     private $_reflect;
 
+    /**
+     * Set a class name
+     *
+     * @param string $class
+     */
     public function setClass($class) {
         $this->_class = $class;
     }
@@ -37,19 +42,28 @@ class Pd_Map_Builder {
         return $this->_map;
     }
 
+    /**
+     * Sets up the builder for... building.
+     *
+     * Makes a new map and reflection class
+     *
+     */
     public function setup() {
         $this->_map = new Pd_Map();
         $this->_reflect = new ReflectionClass($this->_class);
     }
 
 
+    /**
+     * Runs all the builders and builds the entire map
+     */
     public function build() {
 
         $this->setup();
 
         $this->buildMethods();
-
-
+        $this->buildProperties();
+        $this->buildClass();
 
     }
 
@@ -71,6 +85,10 @@ class Pd_Map_Builder {
         return $parser->getOptions();
     }
 
+    /**
+     * Loops through all of the methods and builds items/maps
+     * for them.
+     */
     public function buildMethods() {
 
         $methods = $this->_reflect->getMethods();
@@ -95,6 +113,10 @@ class Pd_Map_Builder {
         }
     }
 
+    /**
+     * Loops through all of the properties and builds items/maps
+     * for them.
+     */
     public function buildProperties() {
 
         $properties = $this->_reflect->getProperties();
@@ -116,6 +138,9 @@ class Pd_Map_Builder {
 
     }
 
+    /**
+     * Builds items based on the classes doc block
+     */
     public function buildClass() {
 
         foreach ($this->_optionsFrom($this->_reflect) as $options) {
@@ -127,8 +152,6 @@ class Pd_Map_Builder {
         }
 
     }
-
-
 
 
     /**

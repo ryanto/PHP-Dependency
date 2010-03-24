@@ -96,6 +96,18 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
 
     }
 
+    public function testBuildAll() {
+
+        $this->builder->build();
+
+        $this->assertEquals(
+                5,
+                $this->builder->map()->count()
+        );
+
+
+    }
+
 
     protected function tearDown() {
         unset($this->builder);
