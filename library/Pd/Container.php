@@ -1,16 +1,24 @@
 <?php
 
-class Base_Di_Container {
+require_once 'Pd/Container/Maps.php';
+require_once 'Pd/Container/Dependencies.php';
+
+/**
+ * Singleton (eww) that holds dependencies/maps.
+ *
+ *
+ */
+class Pd_Container {
 
     private static $_instance = array();
 
     /**
-     * @var Base_Di_Container_Maps
+     * @var Pd_Container_Maps
      */
     private $_maps;
 
     /**
-     * @var Base_Di_Container_Dependencies
+     * @var Pd_Container_Dependencies
      */
     private $_dependencies;
 
@@ -25,7 +33,7 @@ class Base_Di_Container {
     /**
      * Returns one instance singleton
      *
-     * @return Base_Di_Container
+     * @return Pd_Container
      */
     public static function get($container = 'main') {
 
@@ -33,27 +41,34 @@ class Base_Di_Container {
             self::$_instance[$container] = new self();
             self::$_instance[$container]->setup();
         }
+        
         return self::$_instance[$container];
 
     }
 
     /**
-     * @return Base_Di_Container_Maps
+     * @return Pd_Container_Maps
      */
     public function maps() {
         return $this->_maps;
     }
 
     /**
-     * @return Base_Di_Container_Dependencies
+     * @return Pd_Container_Dependencies
      */
     public function dependencies() {
         return $this->_dependencies;
     }
 
+    /**
+     * Sets up the container by creating a new map
+     * and dependency holder.  This function doesn't really
+     * need to ever be called, since the get() function
+     * calls it when creating a 'new' container.  
+     */
     public function setup() {
-        $this->_maps = new Base_Di_Container_Maps();
-        $this->_dependencies = new Base_Di_Container_Dependencies();
+        $this->_maps = new Pd_Container_Maps();
+        $this->_dependencies = new Pd_Container_Dependencies();
     }
 
 

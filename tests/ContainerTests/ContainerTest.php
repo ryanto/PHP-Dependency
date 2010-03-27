@@ -1,24 +1,23 @@
 <?php
 
-class Base_tests_DiTests_ContainerTests_ContainerTest extends PHPUnit_Framework_TestCase {
+require_once 'PHPUnit/Framework.php';
 
-    /**
-     * @var Base_Di_Container
-     */
-    private $container;
+require_once 'Pd/Container.php';
+
+class PdTests_ContainerTests_ContainerTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
-        $this->container = Base_Di_Container::get('testing');
-        $this->container->dependencies()->set('someValue', 'yellow');
+        $container = Pd_Container::get('testing');
+        $container->dependencies()->set('someValue', 'yellow');
     }
 
     public function testSameSingleton() {
-        $container = Base_Di_Container::get('testing');
+        $container = Pd_Container::get('testing');
         $this->assertEquals('yellow', $container->dependencies()->get('someValue'));
     }
 
     public function testNewSingleton() {
-        $container = Base_Di_Container::get('newTest');
+        $container = Pd_Container::get('newTest');
         $this->assertEquals(
             null,
             $container->dependencies()->get('someValue')
