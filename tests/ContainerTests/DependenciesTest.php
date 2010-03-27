@@ -1,39 +1,40 @@
 <?php
 
-class Base_tests_DiTests_ContainerTests_DependenciesTest extends PHPUnit_Framework_TestCase {
-	
-	/**
-	 * @var Base_Di_Container_Dependencies
-	 */
-	private $dependenciesForTest;
-	
-	protected function setUp() {
-		$this->dependenciesForTest = new Base_Di_Container_Dependencies();
-	}
+require_once 'PHPUnit/Framework.php';
 
-    public function testGetReal() {
+require_once 'Pd/Container/Dependencies.php';
+
+class PdTests_ContainerTests_DependenciesTest extends PHPUnit_Framework_TestCase {
+
+    /**
+     * @var Pd_Container_Dependencies
+     */
+    private $dependencies;
+
+    protected function setUp() {
+        $this->dependencies = new Pd_Container_Dependencies();
+    }
+
+    public function testGet() {
         $object = new stdClass();
-        $object->name = 'test';
-        $this->dependenciesForTest->set('test', $object);
+        $object->name = 'testName';
+        $this->dependencies->set('test', $object);
 
-        $getObject = $this->dependenciesForTest->get('test');
+        $getObject = $this->dependencies->get('test');
 
         $this->assertEquals(
-            'test',
-            $getObject->name
+                'testName',
+                $getObject->name
         );
 
     }
 
-    public function testGetNotFoundCreateNewInstance() {
-        $getObject = $this->dependenciesForTest->get('Base_tests_DiTests_stubs_Dummy');
-
-        $this->assertEquals(
-            'world',
-            $getObject->hello()
+    public function testGetNotFoundNull() {
+        $this->assertNull(
+                $this->dependencies->get('doesntExist')
         );
     }
 
 
-	
+
 }
