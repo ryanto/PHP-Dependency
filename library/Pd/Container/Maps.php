@@ -1,5 +1,11 @@
 <?php
 
+require_once 'Pd/Map.php';
+
+/**
+ * Holds all of the maps.
+ *
+ */
 class Pd_Container_Maps {
 
     private $_maps = array();
@@ -8,7 +14,7 @@ class Pd_Container_Maps {
      * Add/set a map to the container by name
      *
      * @param string $name
-     * @param Base_Di_Map $map
+     * @param Pd_Map $map
      */
     public function set($name, $map) {
         $this->_maps[$name] = $map;
@@ -18,13 +24,13 @@ class Pd_Container_Maps {
      * Returns a dependency Map given a name
      *
      * @param string $name
-     * @return Base_Di_Map
+     * @return Pd_Map
      */
     public function get($name) {
         if (isset($this->_maps[$name])) {
             return $this->_maps[$name];
         } else {
-            return new Base_Di_Map();
+            return new Pd_Map();
         }
     }
 

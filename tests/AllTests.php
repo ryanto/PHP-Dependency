@@ -15,6 +15,7 @@ require_once 'MapTests/BuilderTest.php';
 
 require_once 'ContainerTests/ContainerTest.php';
 require_once 'ContainerTests/DependenciesTest.php';
+require_once 'ContainerTests/MapsTest.php';
 
 class AllTests extends PHPUnit_Framework_TestSuite {
 
@@ -36,6 +37,7 @@ class AllTests extends PHPUnit_Framework_TestSuite {
 
         $suite->addTestSuite('PdTests_ContainerTests_ContainerTest');
         $suite->addTestSuite('PdTests_ContainerTests_DependenciesTest');
+        $suite->addTestSuite('PdTests_ContainerTests_MapsTest');
 
         return $suite;
     }
