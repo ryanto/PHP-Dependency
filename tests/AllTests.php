@@ -17,6 +17,8 @@ require_once 'ContainerTests/ContainerTest.php';
 require_once 'ContainerTests/DependenciesTest.php';
 require_once 'ContainerTests/MapsTest.php';
 
+require_once 'MakeTests/BuilderTest.php';
+
 class AllTests extends PHPUnit_Framework_TestSuite {
 
     protected function setUp() {
@@ -38,6 +40,8 @@ class AllTests extends PHPUnit_Framework_TestSuite {
         $suite->addTestSuite('PdTests_ContainerTests_ContainerTest');
         $suite->addTestSuite('PdTests_ContainerTests_DependenciesTest');
         $suite->addTestSuite('PdTests_ContainerTests_MapsTest');
+
+        $suite->addTestSuite('PdTests_MakeTests_BuilderTest');
 
         return $suite;
     }

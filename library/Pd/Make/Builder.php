@@ -1,19 +1,19 @@
 <?php
 
-class Base_Di_Make_Builder extends Base_Di_Make_Abstract {
+require_once 'Pd/Make/Abstract.php';
+
+class Pd_Make_Builder extends Pd_Make_Abstract {
 
     public function buildObject() {
 
-        $this->_findMap();
+        $this->findMap();
 
         if ($this->_map->has('constructor')) {
 
-            // constructor injection
-
             $constructWith = array();
 
-            foreach($this->_map->map('constructor') as $item) {
-                $constructWith[$item->injectAs()] = $this->_container->dependencies()->get($item->name());
+            foreach($this->_map->itemsFor('constructor') as $item) {
+                $constructWith[$item->injectAs()] = $this->getDependencyForItem($item);
             }
 
             $reflector = new ReflectionClass($this->_className);
@@ -35,9 +35,9 @@ class Base_Di_Make_Builder extends Base_Di_Make_Abstract {
 
     public static function build($className, $containerName = 'main') {
 
-        $builder = new Base_Di_Make_Builder();
+        $builder = new self();
         $builder->setClassName($className);
-        $builder->setContainer(Base_Di_Container::get($containerName));
+        $builder->setContainer(Pd_Container::get($containerName));
         $builder->buildObject();
         $object = $builder->object();
         unset($builder);

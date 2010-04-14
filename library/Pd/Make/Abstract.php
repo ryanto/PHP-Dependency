@@ -1,18 +1,19 @@
 <?php
-/**
- * Description of Abstract
- *
- * @author ryan
- */
-abstract class Base_Di_Make_Abstract {
+
+require_once 'Pd/Container.php';
+require_once 'Pd/Make.php';
+require_once 'Pd/Map/Builder.php';
+
+
+abstract class Pd_Make_Abstract {
 
     /**
-     * @var Base_Di_Map
+     * @var Pd_Map
      */
     protected $_map;
 
     /**
-     * @var Base_Di_Container
+     * @var Pd_Container
      */
     protected $_container;
 
@@ -36,52 +37,57 @@ abstract class Base_Di_Make_Abstract {
         return $this->_object;
     }
 
-    protected function _findMap() {
-
-        $this->_map = new Base_Di_Map();
-
-        $checkForMapIn = array(
-          'getMapFromContainer',
-          'getMapFromConfig',
-          'getMapFromDefault',
-        );
-
-        $counter = 0;
-        while ($counter < count($checkForMapIn) && $this->_map->count() == 0) {
-            $this->{$checkForMapIn[$counter]}();
-            $counter++;
-        }
-
-        $this->_saveMapToContainer();
-
-    }
-
-    public function getMapFromContainer() {
+    /**
+     * @return Pd_Map
+     */
+    private function _getMapFromContainer() {
         $this->_map = $this->_container->maps()->get($this->_className);
     }
-    
-    public function getMapFromConfig() {
-        $config = $this->_container->config();
-        $config->setClassName($this->_className);
-        $this->_map = $config->getMap();
-    }
-    
-    public function getMapFromDefault() {
-        $default = $this->_container->maps()->get('_default');
-
-        if ($default->count() == 0) {
-            $config = $this->_container->config();
-            $config->setClassName('_default');
-            $default = $config->getMap();
-        }
-
-        $this->_map = $default;
-    }
-
 
     private function _saveMapToContainer() {
         $this->_container->maps()->set($this->_className, $this->_map);
     }
+
+    protected function loadMap() {
+
+        if ($this->_getMapFromContainer()->count() > 0) {
+            $this->_map = $this->_getMapFromContainer();
+        } else {
+            $this->_map = $this->_buildMap();
+            $this->_saveMapToContainer();
+        }
+
+    }
+
+    private function _buildMap() {
+
+        $builder = new Pd_Map_Builder();
+        $builder->setClass($this->_className);
+        $builder->setup();
+        $builder->build();
+
+        return $builder->map();
+
+    }
+
+    /**
+     * Finds the dependency, new class or pulls from container, based
+     * on item.
+     *
+     * @param Pd_Map_Item $item
+     * @return mixed dependency
+     */
+    protected function getDependencyForItem($item) {
+
+        if ($item->newClass()) {
+            $dependency = Pd_Make::name($item->dependencyName());
+        } else {
+            $dependency = $this->_container->dependencies()->get($item->dependencyName());
+        }
+        
+        return $dependency;
+    }
+
 
 
 
