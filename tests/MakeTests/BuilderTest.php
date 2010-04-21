@@ -8,6 +8,7 @@ require_once 'Pd/Map/Item.php';
 
 require_once 'Pd/Make/Builder.php';
 require_once dirname(__FILE__) . '/../stubs/Dummy.php';
+require_once dirname(__FILE__) . '/../stubs/NonInst.php';
 
 class PdTests_MakeTests_BuilderTest extends PHPUnit_Framework_TestCase {
 
@@ -91,6 +92,8 @@ class PdTests_MakeTests_BuilderTest extends PHPUnit_Framework_TestCase {
         $this->builder->setContainer($container);
         $this->builder->buildObject();
 
+        $object = $this->builder->object();
+
         $this->assertEquals(
                 'color:yellow',
                 $object->getConstructorArg()
@@ -99,12 +102,12 @@ class PdTests_MakeTests_BuilderTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testNonInstantiableClass() {
+        $this->builder->setClassName('PdTests_stubs_NonInst');
+        $this->builder->buildObject();
 
+        $this->assertNull($this->builder->object());
+        
     }
-
-
-
-
 
     public function testBuildWithStatic() {
 
@@ -119,8 +122,6 @@ class PdTests_MakeTests_BuilderTest extends PHPUnit_Framework_TestCase {
         );
 
     }
-
-
 
 
     public function tearDown() {

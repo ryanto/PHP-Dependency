@@ -50,10 +50,10 @@ abstract class Pd_Make_Abstract {
 
     protected function loadMap() {
 
-        if ($this->_getMapFromContainer()->count() > 0) {
-            $this->_map = $this->_getMapFromContainer();
-        } else {
-            $this->_map = $this->_buildMap();
+        $this->_getMapFromContainer();
+
+        if ($this->_map->count() == 0) {
+            $this->_buildMap();
             $this->_saveMapToContainer();
         }
 
@@ -66,7 +66,7 @@ abstract class Pd_Make_Abstract {
         $builder->setup();
         $builder->build();
 
-        return $builder->map();
+        $this->_map = $builder->map();
 
     }
 

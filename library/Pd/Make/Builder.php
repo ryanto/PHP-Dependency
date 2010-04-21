@@ -6,14 +6,14 @@ class Pd_Make_Builder extends Pd_Make_Abstract {
 
     public function buildObject() {
 
-        $this->findMap();
+        $this->loadMap();
 
         if ($this->_map->has('constructor')) {
 
             $constructWith = array();
 
             foreach($this->_map->itemsFor('constructor') as $item) {
-                $constructWith[$item->injectAs()] = $this->getDependencyForItem($item);
+                $constructWith[] = $this->getDependencyForItem($item);
             }
 
             $reflector = new ReflectionClass($this->_className);
