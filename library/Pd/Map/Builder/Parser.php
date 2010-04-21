@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * The parser takes a string and reads all of the PdInject
+ * information.  Its an internal class, no reason for the user
+ * to need to parse his own strings.
+ *
+ */
+
 class Pd_Map_Builder_Parser {
 
     private $_string;
@@ -10,15 +17,29 @@ class Pd_Map_Builder_Parser {
 
     private $_options = array();
     
-
+    /**
+     * The string to parse
+     * 
+     * @param string $string
+     */
     public function setString($string) {
         $this->_string = $string;
     }
 
+    /**
+     * Any information on whats about to be parsed.  Usually this is a
+     * Reflection method/property, but it can be anything.  Used when
+     * throwing errors/exceptions or debugging.
+     *
+     * @param mixed $info
+     */
     public function setInfo($info) {
         $this->_info = $info;
     }
 
+    /**
+     * Matches the string
+     */
     public function match() {
         $this->_matched = preg_match_all(
                 '/@PdInject(.*?)(\n|$)/i',
@@ -30,10 +51,20 @@ class Pd_Map_Builder_Parser {
 
     }
 
+    /**
+     * Checks if the string has a PdInject command
+     *
+     * @return bool
+     */
     public function hasCommand() {
         return $this->_matched > 0;
     }
 
+    /**
+     * Return ths number of PdInject commands
+     *
+     * @return int
+     */
     public function numberOfCommands() {
         return count($this->_matches[1]);
     }
@@ -126,6 +157,13 @@ class Pd_Map_Builder_Parser {
         }
     }
 
+    /**
+     * Returns all of the options, an an array.
+     *
+     * And option is an array of data
+     * 
+     * @return array
+     */
     public function getOptions() {
         return $this->_options;
     }

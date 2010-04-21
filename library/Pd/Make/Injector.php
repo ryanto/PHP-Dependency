@@ -2,8 +2,17 @@
 
 require_once 'Pd/Make/Abstract.php';
 
+/**
+ * Injects (read: setter injection) all of the dependencies
+ * into the object.
+ *
+ */
+
 class Pd_Make_Injector extends Pd_Make_Abstract {
 
+    /**
+     * Injects all of the properties and methods
+     */
     public function injectObject() {
 
         // load the map
@@ -42,8 +51,10 @@ class Pd_Make_Injector extends Pd_Make_Abstract {
     }
     
     /**
-     * @param object $object instance
-     * @param string $containerName the container that holds the maps
+     * Injects everything into the passed object/instance
+     *
+     * @param mixed $object instance
+     * @param string $containerName the container that holds the maps/dependencies
      */
     public static function inject($object, $containerName = 'main') {
 

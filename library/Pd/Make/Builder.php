@@ -2,8 +2,17 @@
 
 require_once 'Pd/Make/Abstract.php';
 
+/**
+ * Builds (read: constructor injection) the object.
+ *
+ */
+
 class Pd_Make_Builder extends Pd_Make_Abstract {
 
+    /**
+     * Creates the object
+     *
+     */
     public function buildObject() {
 
         $this->loadMap();
@@ -33,6 +42,14 @@ class Pd_Make_Builder extends Pd_Make_Abstract {
 
     }
 
+    /**
+     * Creates the object and sets all the dependencies required
+     * for construction.
+     *
+     * @param string $className
+     * @param string $containerName
+     * @return mixed object
+     */
     public static function build($className, $containerName = 'main') {
 
         $builder = new self();

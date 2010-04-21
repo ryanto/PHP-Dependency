@@ -4,6 +4,12 @@ require_once 'Pd/Container.php';
 require_once 'Pd/Make.php';
 require_once 'Pd/Map/Builder.php';
 
+/**
+ * Provides common methods that can be used when
+ * constructing or injecting objects.
+ *
+ */
+
 abstract class Pd_Make_Abstract {
 
     /**
@@ -19,19 +25,40 @@ abstract class Pd_Make_Abstract {
     protected $_object;
     protected $_className;
 
+    /**
+     * The name of the class
+     *
+     * @param string $className
+     */
     public function setClassName($className) {
         $this->_className = $className;
     }
 
+    /**
+     * The container that the make functions will put/pull
+     * the maps and dependencies from.
+     *
+     * @param Pd_Contrainer $container
+     */
     public function setContainer($container) {
         $this->_container = $container;
     }
 
+    /**
+     * The object (for injection)
+     *
+     * @param stdClass $object
+     */
     public function setObject($object) {
         $this->_object = $object;
         $this->setClassName(get_class($object));
     }
 
+    /**
+     * The object
+     *
+     * @return mixed
+     */
     public function object() {
         return $this->_object;
     }
@@ -47,6 +74,13 @@ abstract class Pd_Make_Abstract {
         $this->_container->maps()->set($this->_className, $this->_map);
     }
 
+    /**
+     * Loads a map based on the set class name
+     *
+     * If there is no map in the container, then it will try to build
+     * a map by reading the class.
+     *
+     */
     protected function loadMap() {
 
         $this->_getMapFromContainer();

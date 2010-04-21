@@ -1,12 +1,13 @@
 <?php
 /**
- * Items define how each dependency should be injected.
+ * Items define how each dependency should be injected/maintained.
  *
  * Options
  *  Name - name of the dependency
  *  InjectWith - method, property, constructor
  *  InjectAs - depends on with param
  *  Force - bool, force injection
+ *  NewClass - the name of the new class to create, false otherwise
  *
  * @author ryan
  */
