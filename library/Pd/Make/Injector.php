@@ -20,14 +20,13 @@ class Pd_Make_Injector extends Pd_Make_Abstract {
 
     private function _injectMethods() {
         /* @var $item Pd_Map_Item */
+        
         foreach ($this->_map->itemsFor('method') as $item) {
-
-            $dependency = $this->getDependencyForItem($item);
 
             // only inject if the class has the method, or the item allows forcing
             $reflector = new ReflectionClass($this->_className);
             if ($reflector->hasMethod($item->injectAs()) || $item->force()) {
-                $this->_object->{$item->injectAs()}($dependency);
+                $this->_object->{$item->injectAs()}($this->getDependencyForItem($item));
             }
 
         }
@@ -38,12 +37,10 @@ class Pd_Make_Injector extends Pd_Make_Abstract {
         /* @var $item Pd_Map_Item */
         foreach ($this->_map->itemsFor('property') as $item) {
 
-            $dependency = $this->getDependencyForItem($item);
-
             // only inject if the class has the property, or the item allows forcing
             $reflector = new ReflectionClass($this->_className);
             if ($reflector->hasProperty($item->injectAs()) || $item->force()) {
-                $this->_object->{$item->injectAs()} = $dependency;
+                $this->_object->{$item->injectAs()} = $this->getDependencyForItem($item);
             }
 
         }
@@ -55,11 +52,10 @@ class Pd_Make_Injector extends Pd_Make_Abstract {
      */
     public static function inject($object, $containerName = 'main') {
 
-        $injector = new Base_Di_Make_Injector();
+        $injector = new self();
         $injector->setObject($object);
-        $injector->setContainer(Base_Di_Container::get($containerName));
+        $injector->setContainer(Pd_Container::get($containerName));
         $injector->injectObject();
-        unset($injector);
 
     }
 }

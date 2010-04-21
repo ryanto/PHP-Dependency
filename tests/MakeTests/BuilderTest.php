@@ -124,7 +124,7 @@ class PdTests_MakeTests_BuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function tearDown() {
+    protected function tearDown() {
         unset($this->builder);
         unset($this->className);
         unset($this->containerName);

@@ -2,8 +2,10 @@
 
 /**
  * @PdInject Force method:setForce force:true
- * @PdInject new:PdTests_stubs_Force method:setForce2 force:true
- *
+ * @PdInject new:PdTests_stubs_Something method:setForce2 force:true
+ * @PdInject DoesNotExist method:setDoesNotExist
+ * @PdInject DoesNotExist property:noSuchProperty
+ * @PdInject Apple property:forcedProperty force:true
  */
 class PdTests_stubs_Dummy {
 
@@ -15,8 +17,6 @@ class PdTests_stubs_Dummy {
     public $pear;
     
     private $constructorArg;
-
-    private $forcedVar;
 
     /**
      * @PdInject Banana
@@ -53,6 +53,6 @@ class PdTests_stubs_Dummy {
     }
 
     public function forcedVar() {
-        return $this->forcedVar;
+        return $this->force;
     }
 }

@@ -4,13 +4,13 @@
  *
  * @author ryan
  */
-class Base_Di_Make {
+class Pd_Make {
 
-    public static function name($name) {
+    public static function name($name, $container = 'main') {
 
-        $object = Base_Di_Make_Builder::build($name);
+        $object = Pd_Make_Builder::build($name, $container);
 
-        Base_Di_Make_Injector::inject($object);
+        Pd_Make_Injector::inject($object, $container);
 
         return $object;
 

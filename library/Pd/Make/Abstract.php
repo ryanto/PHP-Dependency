@@ -80,11 +80,14 @@ abstract class Pd_Make_Abstract {
     protected function getDependencyForItem($item) {
 
         if ($item->newClass()) {
-            $dependency = Pd_Make::name($item->dependencyName());
+            $dependency = Pd_Make::name(
+                    $item->newClass(),
+                    $this->_container->name()
+            );
         } else {
             $dependency = $this->_container->dependencies()->get($item->dependencyName());
         }
-        
+
         return $dependency;
     }
 

@@ -39,10 +39,8 @@ class Pd_Make_Builder extends Pd_Make_Abstract {
         $builder->setClassName($className);
         $builder->setContainer(Pd_Container::get($containerName));
         $builder->buildObject();
-        $object = $builder->object();
-        unset($builder);
+        return $builder->object();
 
-        return $object;
     }
 
 }

@@ -1,111 +1,135 @@
 <?php
 
-class Base_tests_DiTests_MakeTests_InjectorTest extends PHPUnit_Framework_TestCase {
-	
-	/**
-	 * @var Base_Di_Injector
-	 */
-	private $injector;
-	
-	/**
-	 * @var Base_tests_DiTests_stubs_Dummy
-	 */
-	private $object;
+require_once 'PHPUnit/Framework.php';
+
+require_once 'Pd/Container.php';
+require_once 'Pd/Map.php';
+require_once 'Pd/Map/Item.php';
+
+require_once 'Pd/Make/Injector.php';
+require_once dirname(__FILE__) . '/../stubs/Dummy.php';
+require_once dirname(__FILE__) . '/../stubs/Something.php';
+
+class PdTests_MakeTests_InjectorTest extends PHPUnit_Framework_TestCase {
+
+    /**
+     * @var Pd_Make_Injector
+     */
+    private $injector;
+
+    /**
+     * @var PdTests_stubs_Dummy
+     */
+    private $object;
 
     private $containerName;
 
-	protected function setUp() {
+    protected function setUp() {
 
-        $this->containerName = 'Base_tests_DiTests_MakeTests_InjectorTest';
+        $this->containerName = 'PdTests_MakeTests_InjectorTest';
+        $this->className = 'PdTests_stubs_Dummy';
 
-		$this->object = new Base_tests_DiTests_stubs_Dummy();
-		
-		$container = Base_Di_Container::get($this->containerName);
+        $container = Pd_Container::get($this->containerName);
 
-		$map = new Base_Di_Map();
+        $container->dependencies()->set('Force', 'a forced var');
+        $container->dependencies()->set('Pear', 'a fruit');
+        $container->dependencies()->set('Apple', 'it is red');
 
-        $item = new Base_Di_Map_Item();
-        $item->setName('apple');
-        $map->add($item);
+        $this->object = new PdTests_stubs_Dummy();
 
-        $item = new Base_Di_Map_Item();
-        $item->setName('My_Pear');
-        $item->setInjectAs('pear');
-        $map->add($item);
+        $this->injector = new Pd_Make_Injector();
+        $this->injector->setObject($this->object);
+        $this->injector->setContainer($container);
 
-        $item = new Base_Di_Map_Item();
-        $item->setName('doesNotExist');
-        $map->add($item);
-
-        $item = new Base_Di_Map_Item();
-        $item->setName('forcedVar');
-        $item->setForce('true');
-        $map->add($item);
-
-		$mapDefault = new Base_Di_Map();
-
-        $item = new Base_Di_Map_Item();
-        $item->setName('apple');
-        $mapDefault->add($item);
-
-        $item = new Base_Di_Map_Item();
-        $item->setName('Some_Framework_Pear');
-        $item->setInjectAs('pear');
-        $mapDefault->add($item);
-
-
-		$container->maps()->set('Base_tests_DiTests_stubs_Dummy', $map);
-		$container->maps()->set('_default', $mapDefault);
-
-		$container->dependencies()->set('apple', 'red');
-		$container->dependencies()->set('My_Pear', 'green');
-		$container->dependencies()->set('Some_Framework_Pear', 'yellow');
-		$container->dependencies()->set('doesNotExist', 'should not be injected');
-        $container->dependencies()->set('forcedVar', 'blue');
-
-		$this->injector = new Base_Di_Make_Injector();
-		$this->injector->setContainer($container);
-		$this->injector->setObject($this->object);
-		
-	}
-	
-	public function testInjectUsingOOWithSetter() {
-		$this->injector->injectObject();
-		$this->assertEquals('red', $this->object->apple());
-	}
-	
-	public function testInjectAsWithPublicProperty() {
-		$this->injector->injectObject();
-		$this->assertEquals('green', $this->object->pear);
-	}
-	
-	public function testInjectUsingDefaultMap() {
-		$container = Base_Di_Container::get($this->containerName);
-		$container->maps()->set('Base_tests_DiTests_stubs_Dummy', new Base_Di_Map());
-		
-		$this->injector->injectObject();
-		
-		$this->assertEquals('yellow', $this->object->pear);
-		
-	}
-	
-	public function testNoMethodOrPropertyExistsOnObject() {
-		$container = Base_Di_Container::get($this->containerName);
-		
-		$this->injector->injectObject();
-		
-		$this->assertFalse(property_exists($this->object, 'doesNotExist'));
-		
-	}
-
-    public function testForceInjection() {
         $this->injector->injectObject();
-        $this->assertEquals('blue', $this->object->forcedVar());
+
     }
-	
-	public function testInjectStatic() {
-		Base_Di_Make_Injector::inject($this->object, $this->containerName);
-		$this->assertEquals('red', $this->object->apple());
-	}
-	
+
+    public function testInjectMethods() {
+
+        $this->assertEquals(
+                'it is red',
+                $this->object->apple()
+        );
+
+
+    }
+
+    public function testInjectMethodHasNoMethod() {
+
+        $this->setExpectedException('Exception');
+        $e = $this->object->doesNotExist;
+
+    }
+
+    public function testInjectMethodNoMethodButForce() {
+
+        $this->assertEquals(
+                'a forced var',
+                $this->object->forcedVar()
+        );
+
+    }
+
+    public function testInjectProperties() {
+        
+        $this->assertEquals(
+                'a fruit',
+                $this->object->pear
+        );
+
+    }
+
+    public function testInjectPropertieNoProperty() {
+
+        $this->setExpectedException('Exception');
+        $e = $this->object->noSuchProperty;
+
+    }
+
+    public function testInjectPropertyNoPropertyButForce() {
+
+        $this->assertEquals(
+                'it is red',
+                $this->object->forcedProperty
+        );
+
+    }
+
+    public function testInjectedNewInstance() {
+
+        $this->assertEquals(
+                'a method from the something class',
+                $this->object->force2->aMethod(),
+                'new instance method call'
+        );
+
+        $this->assertEquals(
+                'it is red',
+                $this->object->force2->apple(),
+                'injected dep into new instance'
+        );
+
+
+    }
+
+    public function testStaticInjector() {
+
+        $this->object = new PdTests_stubs_Dummy();
+        Pd_Make_Injector::inject($this->object, $this->containerName);
+
+        $this->assertEquals(
+                'a fruit',
+                $this->object->pear
+        );
+
+    }
+
+
+    protected function tearDown() {
+        unset($this->injector);
+        unset($this->object);
+        unset($this->containerName);
+    }
+
 }

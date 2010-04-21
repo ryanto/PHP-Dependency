@@ -22,6 +22,8 @@ class Pd_Container {
      */
     private $_dependencies;
 
+    private $_name;
+
 
     private function __construct() {
 
@@ -39,11 +41,20 @@ class Pd_Container {
 
         if (!isset(self::$_instance[$container])) {
             self::$_instance[$container] = new self();
+            self::$_instance[$container]->setName($container);
             self::$_instance[$container]->setup();
         }
         
         return self::$_instance[$container];
 
+    }
+
+    public function setName($name) {
+        $this->_name = $name;
+    }
+
+    public function name() {
+        return $this->_name;
     }
 
     /**
