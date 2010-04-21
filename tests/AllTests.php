@@ -19,6 +19,7 @@ require_once 'ContainerTests/MapsTest.php';
 
 require_once 'MakeTests/BuilderTest.php';
 require_once 'MakeTests/InjectorTest.php';
+require_once 'MakeTests/MakeTest.php';
 
 class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
 

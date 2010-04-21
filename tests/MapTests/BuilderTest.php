@@ -75,7 +75,7 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
         $this->builder->buildClass();
 
         $this->assertEquals(
-                2,
+                5,
                 $this->builder->map()->count()
         );
 
@@ -90,7 +90,7 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
         $items = $this->builder->map()->itemsFor('method');
 
         $this->assertEquals(
-                'PdTests_stubs_Force',
+                'PdTests_stubs_Something',
                 $items[1]->newClass()
         );
 
@@ -101,7 +101,7 @@ class PdTests_MapTests_BuilderTest extends PHPUnit_Framework_TestCase {
         $this->builder->build();
 
         $this->assertEquals(
-                5,
+                8,
                 $this->builder->map()->count()
         );
 
