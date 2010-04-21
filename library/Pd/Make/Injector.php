@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Injection class.
- *
- * Provides an OO way of injecting, and a public static method.
- *
- */
+require_once 'Pd/Make/Abstract.php';
 
 class Pd_Make_Injector extends Pd_Make_Abstract {
 

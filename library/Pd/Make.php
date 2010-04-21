@@ -1,9 +1,8 @@
 <?php
-/**
- * Description of Make
- *
- * @author ryan
- */
+
+require_once 'Pd/Make/Builder.php';
+require_once 'Pd/Make/Injector.php';
+
 class Pd_Make {
 
     public static function name($name, $container = 'main') {

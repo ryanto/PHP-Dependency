@@ -44,6 +44,7 @@ class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
 
         $suite->addTestSuite('PdTests_MakeTests_BuilderTest');
         $suite->addTestSuite('PdTests_MakeTests_InjectorTest');
+        $suite->addTestSuite('PdTests_MakeTests_MakeTest');
 
         return $suite;
     }
