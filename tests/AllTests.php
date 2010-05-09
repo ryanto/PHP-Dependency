@@ -12,6 +12,7 @@ require_once 'MapTests/MapTest.php';
 
 require_once 'MapTests/BuilderTests/ParserTest.php';
 require_once 'MapTests/BuilderTests/ClassTest.php';
+require_once 'MapTests/BuilderTests/ArrayTest.php';
 
 require_once 'ContainerTests/ContainerTest.php';
 require_once 'ContainerTests/DependenciesTest.php';
@@ -24,7 +25,7 @@ require_once 'MakeTests/MakeTest.php';
 class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
 
     protected function setUp() {
-    
+        
     }
 
     public static function suite() {
@@ -36,8 +37,8 @@ class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
 
 
         $suite->addTestSuite('PdTests_MapTests_BuilderTests_ParserTest');
-
-        $suite->addTestSuite('PdTests_MapTests_BuilderTest');
+        $suite->addTestSuite('PdTests_MapTests_BuilderTests_ClassTest');
+        $suite->addTestSuite('PdTests_MapTests_BuilderTests_ArrayTest');
 
         $suite->addTestSuite('PdTests_ContainerTests_ContainerTest');
         $suite->addTestSuite('PdTests_ContainerTests_DependenciesTest');

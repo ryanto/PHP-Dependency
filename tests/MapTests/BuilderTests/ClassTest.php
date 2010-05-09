@@ -3,7 +3,7 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once 'Pd/Map/Builder/Class.php';
-require_once dirname(__FILE__) . '/../stubs/Dummy.php';
+require_once dirname(__FILE__) . '/../../stubs/Dummy.php';
 
 
 class PdTests_MapTests_BuilderTests_ClassTest extends PHPUnit_Framework_TestCase {
@@ -14,7 +14,7 @@ class PdTests_MapTests_BuilderTests_ClassTest extends PHPUnit_Framework_TestCase
     private $builder;
 
     protected function setUp() {
-        $this->builder = new Pd_Map_Builder();
+        $this->builder = new Pd_Map_Builder_Class();
         $this->builder->setClass('PdTests_stubs_Dummy');
     }
 

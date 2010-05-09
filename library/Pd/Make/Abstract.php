@@ -2,14 +2,13 @@
 
 require_once 'Pd/Container.php';
 require_once 'Pd/Make.php';
-require_once 'Pd/Map/Builder.php';
+require_once 'Pd/Map/Builder/Class.php';
 
 /**
  * Provides common methods that can be used when
  * constructing or injecting objects.
  *
  */
-
 abstract class Pd_Make_Abstract {
 
     /**
