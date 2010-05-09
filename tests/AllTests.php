@@ -11,7 +11,7 @@ require_once 'MapTests/ItemTest.php';
 require_once 'MapTests/MapTest.php';
 
 require_once 'MapTests/BuilderTests/ParserTest.php';
-require_once 'MapTests/BuilderTest.php';
+require_once 'MapTests/BuilderTests/ClassTest.php';
 
 require_once 'ContainerTests/ContainerTest.php';
 require_once 'ContainerTests/DependenciesTest.php';
