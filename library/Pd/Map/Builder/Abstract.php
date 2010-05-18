@@ -44,6 +44,17 @@ abstract class Pd_Map_Builder_Abstract {
      * @return Pd_Map_Item
      */
     protected function _makeItemFromOptions($options) {
+
+        $defaults = array(
+            'dependencyName' => null,
+            'injectWith' => null,
+            'injectAs' => null,
+            'force' => false,
+            'newClass' => null,
+        );
+
+        $options = array_merge($defaults, $options);
+
         $item = new Pd_Map_Item();
         $item->setDependencyName($options['dependencyName']);
         $item->setInjectWith($options['injectWith']);
