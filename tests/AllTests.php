@@ -18,8 +18,8 @@ require_once 'ContainerTests/ContainerTest.php';
 require_once 'ContainerTests/DependenciesTest.php';
 require_once 'ContainerTests/MapsTest.php';
 
-require_once 'MakeTests/BuilderTest.php';
-require_once 'MakeTests/InjectorTest.php';
+require_once 'MakeTests/ConstructorTest.php';
+require_once 'MakeTests/SetterTest.php';
 require_once 'MakeTests/MakeTest.php';
 
 class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
@@ -35,7 +35,6 @@ class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
         $suite->addTestSuite('PdTests_MapTests_ItemTest');
         $suite->addTestSuite('PdTests_MapTests_MapTest');
 
-
         $suite->addTestSuite('PdTests_MapTests_BuilderTests_ParserTest');
         $suite->addTestSuite('PdTests_MapTests_BuilderTests_ClassTest');
         $suite->addTestSuite('PdTests_MapTests_BuilderTests_ArrayTest');
@@ -44,8 +43,8 @@ class PdTests_AllTests extends PHPUnit_Framework_TestSuite {
         $suite->addTestSuite('PdTests_ContainerTests_DependenciesTest');
         $suite->addTestSuite('PdTests_ContainerTests_MapsTest');
 
-        $suite->addTestSuite('PdTests_MakeTests_BuilderTest');
-        $suite->addTestSuite('PdTests_MakeTests_InjectorTest');
+        $suite->addTestSuite('PdTests_MakeTests_ConstructorTest');
+        $suite->addTestSuite('PdTests_MakeTests_SetterTest');
         $suite->addTestSuite('PdTests_MakeTests_MakeTest');
 
         return $suite;

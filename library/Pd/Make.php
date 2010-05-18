@@ -1,15 +1,15 @@
 <?php
 
-require_once 'Pd/Make/Builder.php';
-require_once 'Pd/Make/Injector.php';
+require_once 'Pd/Make/Constructor.php';
+require_once 'Pd/Make/Setter.php';
 
 class Pd_Make {
 
     public static function name($name, $container = 'main') {
 
-        $object = Pd_Make_Builder::build($name, $container);
+        $object = Pd_Make_Constructor::construct($name, $container);
 
-        Pd_Make_Injector::inject($object, $container);
+        Pd_Make_Setter::inject($object, $container);
 
         return $object;
 

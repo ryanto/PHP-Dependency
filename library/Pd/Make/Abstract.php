@@ -93,7 +93,7 @@ abstract class Pd_Make_Abstract {
 
     private function _buildMap() {
 
-        $builder = new Pd_Map_Builder();
+        $builder = new Pd_Map_Builder_Class();
         $builder->setClass($this->_className);
         $builder->setup();
         $builder->build();
