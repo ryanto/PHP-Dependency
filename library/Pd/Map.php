@@ -46,7 +46,14 @@ class Pd_Map {
 
     }
 
-
+    /**
+     * Checks to see if the map has dependencies for
+     * $injectWith (injection with = method, constructor, etc)
+     * 
+     *
+     * @param string $injectWith method, constructor, property, etc
+     * @return bool
+     */
     public function has($injectWith) {
         if (count($this->itemsFor($injectWith)) > 0) {
             return true;
@@ -55,6 +62,9 @@ class Pd_Map {
         }
     }
 
+    /**
+     * @return int number of items
+     */
     public function count() {
         return count($this->_items);
     }

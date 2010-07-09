@@ -7,7 +7,6 @@ require_once 'Pd/Map/Builder/Parser.php';
  * This class will read a class and build a dependency map
  * (of items) based off the doc blocks.
  *
- * @author ryan
  */
 
 class Pd_Map_Builder_Class extends Pd_Map_Builder_Abstract {

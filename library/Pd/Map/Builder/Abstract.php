@@ -27,11 +27,20 @@ abstract class Pd_Map_Builder_Abstract {
         return $this->_map;
     }
 
+    /**
+     * Setup for building a make.  Makes a new
+     * Pd_Map and then runs the builders _setup method
+     */
     public function setup() {
         $this->_map = new Pd_Map();
         $this->_setup();
     }
 
+    /**
+     * Builds the map by running the setup method and
+     * then running the builers _build method.
+     * 
+     */
     public function build() {
         $this->setup();
         $this->_build();
