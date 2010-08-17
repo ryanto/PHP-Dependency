@@ -26,7 +26,11 @@ class Pd_Map_Builder_Array extends Pd_Map_Builder_Abstract {
         $this->_arrayMaps = array();
     }
 
-
+    /**
+     * Adds an item (array based).  Supports chaining.
+     *
+     * @param array $mapArray
+     */
     public function add($mapArray) {
         $this->_arrayMaps[] = $mapArray;
         return $this;
