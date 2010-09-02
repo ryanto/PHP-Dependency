@@ -9,18 +9,18 @@ class PdTests_ContainerTests_DependenciesTest extends PHPUnit_Framework_TestCase
     /**
      * @var Pd_Container_Dependencies
      */
-    private $dependencies;
+    private $containerDependencies;
 
     protected function setUp() {
-        $this->dependencies = new Pd_Container_Dependencies();
+        $this->containerDependencies = new Pd_Container_Dependencies();
     }
 
     public function testGet() {
         $object = new stdClass();
         $object->name = 'testName';
-        $this->dependencies->set('test', $object);
+        $this->containerDependencies->set('test', $object);
 
-        $getObject = $this->dependencies->get('test');
+        $getObject = $this->containerDependencies->get('test');
 
         $this->assertEquals(
                 'testName',
@@ -31,7 +31,7 @@ class PdTests_ContainerTests_DependenciesTest extends PHPUnit_Framework_TestCase
 
     public function testGetNotFoundNull() {
         $this->assertNull(
-                $this->dependencies->get('doesntExist')
+                $this->containerDependencies->get('doesntExist')
         );
     }
 
