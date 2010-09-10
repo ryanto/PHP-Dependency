@@ -17,7 +17,7 @@ files.
          *
          * @PdInject database
          */
-        public function __construct($databse) {
+        public function __construct($database) {
             $this->_database = $database;
         }
 
