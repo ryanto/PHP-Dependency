@@ -1,6 +1,6 @@
 # PHP Dependency #
 
-url (TODO)
+[http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/](http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/)
 
 PHP-Dependency (Pd) is a dependency injection framework and container written
 in PHP.  One of the main features of PHP-Dependency is that it supports
@@ -70,7 +70,7 @@ will be injecting a dependency by name, which just requires the dependency name.
 
     }
 
-To see a full list of commands/syntax please visit url (TODO)
+To see a full list of commands/syntax please visit [this page](http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/#phpdependency-keyvaluecommands)
 
 ## Creating Objects ##
 
@@ -91,4 +91,4 @@ auto complete any calls/usages of $book in your code.
 ## More ##
 
 This is just a brief intro to PHP-Dependency.  There are a lot more features
-located at url (TODO)
+located at [http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/](http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/)
