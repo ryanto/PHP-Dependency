@@ -70,7 +70,7 @@ will be injecting a dependency by name, which just requires the dependency name.
 
     }
 
-To see a full list of commands/syntax please visit [this page](http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/#phpdependency-keyvaluecommands)
+To see a full list of commands/syntax please visit [this page](http://www.potstuck.com/2010/09/09/php-dependency-a-php-dependency-injection-framework/#phpdependency-keyvaluecommands).
 
 ## Creating Objects ##
 
